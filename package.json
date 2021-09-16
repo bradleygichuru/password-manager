@@ -1,0 +1,30 @@
+{
+  "name": "password-manager",
+  "version": "1.0.0",
+  "description": "a simple password manager ",
+  "main": "index.js",
+  "type":"module",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bradleygichuru/password-manager.git"
+  },
+  "keywords": [
+    "password"
+  ],
+  "author": "bradleygichuru",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bradleygichuru/password-manager/issues"
+  },
+  "homepage": "https://github.com/bradleygichuru/password-manager#readme",
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "nodemon": "^2.0.12"
+  }
+}
