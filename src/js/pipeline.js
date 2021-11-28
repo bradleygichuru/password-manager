@@ -1,13 +1,37 @@
-const cryptohelper = require('./cryptohelper');
-const fs = require('fs');
+//const cryptohelper = require('./cryptohelper.js');
 
+import { sqlite3 } from 'sqlite3';//TODOfind new sqlite package or way to fix 
 
+import { readFileSync, writeFileSync } from 'fs';
+function init() {
+    let db = new sqlite3.Database('./db/pwd.db', sqlite3.OPEN_CREATE, (err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('Connected to the chinook database.');
+    });
+
+    db.serialize(() => {
+        db.run(`CREATE TABLE users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                pwsdString text,
+                token text )`)
+
+    })
+    db.close((err) => {
+        if (err) {
+            console.error(err.message);
+        }
+        console.log('Close the database connection.');
+
+    })
+}
 
 function readFileContents(filepath, key) {
     //read , decrypt ,send
     try {
 
-        var data = fs.readFileSync(filepath, 'utf-8');
+        var data = readFileSync(filepath, 'utf-8');
         if (data) {
             var reqdata = cryptohelper.decrypt(data, key)
 
@@ -28,7 +52,7 @@ function writeDetails(filepath, key, newData) {
     var finalData;
     try {
 
-        var data = fs.readFileSync(filepath, 'utf-8');
+        var data = readFileSync(filepath, 'utf-8');
         if (data) {
             var reqdata = cryptohelper.decrypt(data, key)
 
@@ -52,7 +76,7 @@ function writeDetails(filepath, key, newData) {
         finalData = JSON.stringify(finalData);
         finalData = cryptohelper.encrypt(finalData, key)
         console.log({ "finaldata after encryption": finalData })
-        fs.writeFileSync(filepath, finalData)
+        writeFileSync(filepath, finalData)
         //debug logs remember to remove 
 
     } catch (err) {
@@ -70,6 +94,6 @@ function writeDetails(filepath, key, newData) {
     }
     
 }`)*/
-readFileContents('../tests/test.txt', "bradleygichuru")
+//readFileContents('../tests/test.txt', "bradleygichuru")
 
-module.exports = { readFileContents, writeDetails }
+export default { readFileContents, writeDetails }
