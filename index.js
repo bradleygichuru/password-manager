@@ -2,29 +2,44 @@ import express from 'express';
 import path from 'path';
 //const path = require("path");
 //const fs = require("fs");
-var __dirname = path.dirname.toString()
-//const { generateToken } = require("./src/js/authinit");
-//import { generateToken } from './src/js/authinit.js';//TODO some error 
+var dirname = path.resolve('./');
+console.log(dirname)
+
+import { generateToken } from './src/js/authinit.js';
 import { buildSchema } from 'graphql';
 import { graphqlHTTP } from 'express-graphql';
 //var { graphqlHTTP } = require('express-graphql');
 //var { buildSchema } = require('graphql');
 const server = express();
 const port = 3000;
-const staticDir = path.join(__dirname, `public`);
+const staticDir = path.join(dirname, `src`);
 server.use(express.json())
 server.use(express.static(staticDir));
+console.log(dirname);
 server.get("/", (req, res) => {
   console.log(req.url);
   res
     .status(200)
     .type(".html")
-    .sendFile(path.join(__dirname, "src", "html", "index.html"));
+    .sendFile(path.join(dirname,"src", "html", "index.html"));
 });
-
+server.get("/access", (req, res) => {
+  console.log(req.url);
+  res
+    .status(200)
+    .type(".html")
+    .sendFile(path.join(dirname,"src", "html", "auth.html"));
+});
 server.post("/auth", (req, res) => {
+  console.log(req.body)
   if (req.body.password == query && req.body.password == password) {
-    //let token = generateToken(req.body.password + req.body.username, somePassword);
+    let token = generateToken(req.body.password + req.body.username, somePassword);
+    //debug log 
+    console.log({password:req.body.password,username:req.body.username,token:token} );
+    res.status(200)
+    .type(".html")
+    .sendFile(path.join( dirname,"src", "html", "index.html"));
+    //TODO add login logic and intergrate with db 
   }
 
 })

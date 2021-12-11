@@ -1,30 +1,37 @@
-//const cryptohelper = require('./cryptohelper.js');
+//wconst cryptohelper = require('./cryptohelper.js');
 
-import { sqlite3 } from 'sqlite3';//TODOfind new sqlite package or way to fix 
-
+import { open } from 'sqlite';
+import sqlite3 from 'sqlite3';
 import { readFileSync, writeFileSync } from 'fs';
-function init() {
-    let db = new sqlite3.Database('./db/pwd.db', sqlite3.OPEN_CREATE, (err) => {
-        if (err) {
-            console.error(err.message);
-        }
-        console.log('Connected to the chinook database.');
-    });
 
-    db.serialize(() => {
-        db.run(`CREATE TABLE users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                pwsdString text,
-                token text )`)
+export async function firstTimeInit() {
+    const db = await open({
+        filename: './rango.db',
+        driver: sqlite3.Database
+      });
+      await db.exec('CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT,email text,pwsdString text,token text )'); 
+      await db.close()
+}
 
-    })
-    db.close((err) => {
-        if (err) {
-            console.error(err.message);
-        }
-        console.log('Close the database connection.');
+export async function openDB(){
+    return(
+        await open({
+            filename: './rango.db',
+            driver: sqlite3.cached.Database
+          })
+    )
+}
 
-    })
+export async function addRow(data){
+//TODO add logic to add rows to the database 
+    let db = await openDB();
+    db.exec(`${sf}`);
+    db.close()
+}
+export async function updateToken (id,token){
+    let db = await openDB();
+    db.exec(`UPDATE users`)
+//TODO add logic to add update user tokens a login 
 }
 
 function readFileContents(filepath, key) {
@@ -95,5 +102,6 @@ function writeDetails(filepath, key, newData) {
     
 }`)*/
 //readFileContents('../tests/test.txt', "bradleygichuru")
+init()
 
 export default { readFileContents, writeDetails }
