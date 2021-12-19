@@ -32,7 +32,7 @@ server.get("/access", (req, res) => {
 });
 server.post("/auth", (req, res) => {
   console.log(req.body)
-  if (req.body.password == query && req.body.password == password) {
+  if (req.body.password ) {
     let token = generateToken(req.body.password + req.body.username, somePassword);
     //debug log 
     console.log({password:req.body.password,username:req.body.username,token:token} );
@@ -40,6 +40,11 @@ server.post("/auth", (req, res) => {
     .type(".html")
     .sendFile(path.join( dirname,"src", "html", "index.html"));
     //TODO add login logic and intergrate with db 
+  }
+  else{
+    res.status(404)
+    .type(".html")
+    .send("error")
   }
 
 })
