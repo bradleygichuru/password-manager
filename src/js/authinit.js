@@ -1,9 +1,8 @@
 //import { sign, verify } from 'jsonwebtoken';
 import jsonwebtoken from 'jsonwebtoken'
 export function generateToken(payload, key) {
-    var token = jsonwebtoken.sign(payload, key, {
-        expiresIn: "2h",
-    })
+    var token = jsonwebtoken.sign(payload, key)
+    
     return token;
 }
 export function verifyToken(token, key) {

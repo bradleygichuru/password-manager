@@ -8,11 +8,15 @@ console.log(dirname)
 import { generateToken } from './src/js/authinit.js';
 import { buildSchema } from 'graphql';
 import { graphqlHTTP } from 'express-graphql';
+import bodyParser from 'body-parser'
+import helmet from 'helmet';
 //var { graphqlHTTP } = require('express-graphql');
 //var { buildSchema } = require('graphql');
 const server = express();
 const port = 3000;
 const staticDir = path.join(dirname, `src`);
+server.use(helmet())
+server.use(bodyParser.urlencoded({extended: false}));
 server.use(express.json())
 server.use(express.static(staticDir));
 console.log(dirname);
@@ -33,7 +37,7 @@ server.get("/access", (req, res) => {
 server.post("/auth", (req, res) => {
   console.log(req.body)
   if (req.body.password ) {
-    let token = generateToken(req.body.password + req.body.username, somePassword);
+    let token = generateToken(req.body.password + req.body.username, 'somePassword');
     //debug log 
     console.log({password:req.body.password,username:req.body.username,token:token} );
     res.status(200)
