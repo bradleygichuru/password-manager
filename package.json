@@ -31,6 +31,7 @@
     "graphql": "^15.7.2",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.3.0",
     "nano": "^9.0.5",
     "nodemon": "^2.0.12",
     "sqlite": "^4.0.23",

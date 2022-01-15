@@ -10,6 +10,7 @@ import { buildSchema } from 'graphql';
 import { graphqlHTTP } from 'express-graphql';
 import bodyParser from 'body-parser'
 import helmet from 'helmet';
+import { addRow } from './src/js/pipeline.js';
 //var { graphqlHTTP } = require('express-graphql');
 //var { buildSchema } = require('graphql');
 const server = express();
@@ -40,6 +41,7 @@ server.post("/auth", (req, res) => {
     let token = generateToken(req.body.password + req.body.username, 'somePassword');
     //debug log 
     console.log({password:req.body.password,username:req.body.username,token:token} );
+    addRow(req.body.username,req.body.password,token)
     res.status(200)
     .type(".html")
     .sendFile(path.join( dirname,"src", "html", "index.html"));
