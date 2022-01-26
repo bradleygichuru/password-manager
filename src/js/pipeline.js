@@ -1,39 +1,85 @@
-import mongodb, { MongoClient } from "mongodb"
-const monngoClient = mongodb.MongoClient;
+import mongodb, {
+  MongoClient
+} from "mongodb";
 
-var uri = "mongodb+srv://<username>:<password>@cluster0.bvlyn.gcp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
- function addUser(data){
-     MongoClient.connect(uri,{ useNewUrlParser: true },(err,client)=>{
-        let dbo = client.db('pswm')
-        dbo.collection('users').insertOne(data,(err,result)=>{
-            if (err) throw err
-        })
-        client.close()
-     })
- }
- function removeUser(userId){
-     MongoClient.connect(uri,{useNewUrlParser:true},(err,client)=>{
-         let dbo = client.db('pswm')
-         dbo.collection('users').deleteOne(userId,(err,ress)=>{
-             if (err) throw err 
-         })
-     })
-    
- }
- function addPassword(userId){
-    MongoClient.connect(uri,{ useNewUrlParser: true },(err,client)=>{
-        let dbo = client.db('pswm')
-        dbo.collection('users').updateOne(userId,update)
-        client.close()
+var uri =
+  "mongodb+srv://brad-kabecha:LfmLb9K9SC7Cjnft@cluster0.bvlyn.gcp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+export async function addUser(data) {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true
+  });
+  try {
+    await client.connect()
+    let db = client.db("pswm")
+    let users = db.collection("users")
+    let result = await users.insertOne(data)
+    if (result.insertedId) return true;
+    else throw error;;
+
+  } catch (error) {
+
+  } finally {
+    await client.close()
+  }
+}
+export function removeUser(username) {
+  MongoClient.connect(uri, {
+    useNewUrlParser: true
+  }, (err, client) => {
+    let dbo = client.db("pswm");
+    dbo.collection("users").deleteOne(username, (err, ress) => {
+      if (err) throw err;
+    });
+  });
+}
+export function addPassword(username, update) {
+  MongoClient.connect(uri, {
+    useNewUrlParser: true
+  }, (err, client) => {
+    let dbo = client.db("pswm");
+    dbo.collection("users").updateOne(username, update);
+    client.close();
+  });
+}
+export async function checkIfUserExists(username) {
+  const client = new MongoClient(uri, {
+    useNewUrlParser: true
+  });
+
+  try {
+    console.log({
+      usernametocheck: username
+    }) //debug log
+    await client.connect()
+    let db = client.db("pswm")
+    let users = db.collection("users")
+    let result = await users.findOne({
+      username: username
     })
- }
- function removeData(){
-    MongoClient.connect(uri,{ useNewUrlParser: true },(err,client)=>{
-         
+    console.log({
+      result: result
     })
- }
- function retrieveAllpasswords(){
-    MongoClient.connect(uri,{ useNewUrlParser: true },(err,client)=>{
-         
-    })
- }
+    if (result.username == username) {
+      return true
+    }
+    else if (!result.username) {
+      return false
+    }
+    if (error) throw error
+  } catch (error) {
+
+  } finally {
+    await client.close()
+  }
+
+}
+export function removeData() {
+  MongoClient.connect(uri, {
+    useNewUrlParser: true
+  }, (err, client) => { });
+}
+export function retrieveAllpasswords() {
+  MongoClient.connect(uri, {
+    useNewUrlParser: true
+  }, (err, client) => { });
+}
