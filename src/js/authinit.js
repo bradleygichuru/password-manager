@@ -10,3 +10,4 @@ export function verifyToken(token, key) {
     return decoded;
 
 }
+//debug log console.log({token:generateToken("kabecha","1234"),payload:verifyToken(generateToken("kabecha","1234"),"1234")})
