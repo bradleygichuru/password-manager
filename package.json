@@ -24,7 +24,9 @@
   },
   "homepage": "https://github.com/bradleygichuru/password-manager#readme",
   "dependencies": {
+    "apollo-server-express": "^3.6.2",
     "body-parser": "^1.19.1",
+    "cookie-parser": "^1.4.6",
     "crypto-js": "^4.1.1",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",

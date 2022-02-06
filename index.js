@@ -97,7 +97,7 @@ server.post("/auth", async (req, res) => {
       let token =  generateToken(
         req.body.password + req.body.username,
         req.body.password
-      )//TODO proper password
+      )
       //console.log({id:existence._id})//debug log
       addUser({
         username: req.body.username,
@@ -132,7 +132,7 @@ var schema = buildSchema(`
 // The root provides a resolver function for each API endpoint
 var root = {
   passwordData: async () => {
-    return await retrieveUserData(); //TODO add this
+    return await retrieveUserData('eyJhbGciOiJIUzI1NiJ9.a2FiZWNoYTc1OTlicmFk.mW1dR3LaMUyrstdO3wmWZWojO714IH9Kk2F8HGR7HP8'); //TODO add this
   },
 };
 

@@ -12,3 +12,4 @@ async function populate(){
       console.log(await data.json())
 
 }
+//TODO fix graphql working 
