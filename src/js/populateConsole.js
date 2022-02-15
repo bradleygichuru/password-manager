@@ -1,15 +1,15 @@
-//TODO popilate console with user passwords
+//TODO populate console with user passwords
+
 async function populate(){
-    let data = await fetch('/graphql', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({query: "{ passwordData }"})
-      })
+    let token = document.cookie.split("=")[1]
+    let url = `${document.location.host}/api/${token}`
+    console.log({requestUrl:url})
+    let data = await fetch(url,{
+      mode:'cors'
+    })
       
       console.log(await data.json())
 
 }
-//TODO fix graphql working 
+//TODO fix cross origin request error 
+populate()

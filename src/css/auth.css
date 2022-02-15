@@ -1,3 +1,8 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Ubuntu Mono', monospace;
+  }
 .main {
     background-color: #FFFFFF;
     width: 400px;
@@ -14,7 +19,13 @@
     font-weight: bold;
     font-size: 23px;
 }
-
+.head {
+    margin: 20px;
+    border-radius: 10px;
+    border-style: solid;
+    width: 200px;
+    padding: 20px;
+  }
 .un {
 width: 76%;
 color: rgb(38, 50, 56);
