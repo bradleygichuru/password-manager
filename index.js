@@ -19,7 +19,7 @@ import helmet from "helmet";
 
 
 const server = express();
-const port = 3001;
+const port = process.env.PORT || 3000
 const staticDir = path.join(dirname, `src`);
 /*server.use(helmet({
   contentSecurityPolicy: false,
