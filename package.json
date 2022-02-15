@@ -7,8 +7,10 @@
   "directories": {
     "test": "tests"
   },
-  "scripts": {
+  "scripts": { 
+    "start": "node index.js",
     "test": "nodemon index.js"
+   
   },
   "repository": {
     "type": "git",
