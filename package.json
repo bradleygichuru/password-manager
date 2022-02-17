@@ -7,10 +7,9 @@
   "directories": {
     "test": "tests"
   },
-  "scripts": { 
+  "scripts": {
     "start": "node index.js",
     "test": "nodemon index.js"
-   
   },
   "repository": {
     "type": "git",
@@ -42,6 +41,11 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
-    "@types/body-parser": "^1.19.2"
+    "@types/body-parser": "^1.19.2",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^27.5.1",
+    "superagent": "^7.1.1",
+    "supertest": "^6.2.2"
   }
 }
