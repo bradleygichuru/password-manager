@@ -8,20 +8,65 @@
     <title>Document</title>
   </head>
   <body>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../js/populateConsole.js"></script>
     <div class="header">
       <div class="user-initials-container">
         <p class="user-initials">PB</p>
       </div>
     </div>
-    <div class="passwords-container">
-      <div class="password">password</div>
-      <div class="password">password</div>
-      <div class="password">password</div>
-      <div class="password">password</div>
-      <div class="password">password</div>
+    <div class="page-container">
+      <div class="container">
+        <form id="contact" action="/addpswd" method="post">
+          <h3>Add password</h3>
+
+          <fieldset>
+            <input
+              placeholder="Site url"
+              type="text"
+              tabindex="1"
+              name="siteurl"
+              required
+              autofocus
+            />
+          </fieldset>
+          <fieldset>
+            <input
+              placeholder="Site username"
+              name="username"
+              type="email"
+              tabindex="2"
+              required
+            />
+          </fieldset>
+          <fieldset>
+            <input
+              placeholder="Site password "
+              name="password"
+              type="password"
+              tabindex="2"
+              required
+            />
+          </fieldset>
+          <fieldset>
+            <button
+              name="submit"
+              type="submit"
+              id="contact-submit"
+              data-submit="...Sending"
+            >
+              Submit
+            </button>
+          </fieldset>
+        </form>
+      </div>
+
+      <div class="passwords-container">
+        <div class="password">password</div>
+        <div class="password">password</div>
+        <div class="password">password</div>
+        <div class="password">password</div>
+        <div class="password">password</div>
+      </div>
     </div>
-    
   </body>
 </html>
