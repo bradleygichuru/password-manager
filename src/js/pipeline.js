@@ -1,8 +1,7 @@
 import {
   MongoClient
 } from "mongodb";
-
-var uri =
+const uri =
   "mongodb+srv://brad-kabecha:LfmLb9K9SC7Cjnft@cluster0.bvlyn.gcp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 export async function addUser(data) {
@@ -33,14 +32,34 @@ export function removeUser(username) {
     });
   });
 }
-export function addPassword(username, update) {
-  MongoClient.connect(uri, {
+export async function addPassword(username, update, token) {
+  
+  const client = new MongoClient(uri, {
     useNewUrlParser: true
-  }, (err, client) => {
-    let dbo = client.db("pswm");
-    dbo.collection("users").updateOne(username, update);
-    client.close();
   });
+  let passwords = await retrieveUserData(token)
+  try {
+    console.log({
+      userToUpdate: username
+    }) //DEBUG log
+    await client.connect()
+    let db = client.db("pswm")
+    let users = db.collection("users")
+    const options = { upsert: true };
+    
+    passwords = passwords.payload
+    console.log(passwords)
+    passwords.push(update)
+    
+    console.log(passwords)
+    let result = await users.updateOne({ username: username }, { $set:{payload:passwords} },options)
+    console.log({ result: result })//degug log 
+    if (error) throw error
+  } catch (error) {
+
+  } finally {
+    await client.close()
+  }
 }
 export async function checkIfUserExists(username) {
   const client = new MongoClient(uri, {
@@ -48,9 +67,9 @@ export async function checkIfUserExists(username) {
   });
 
   try {
-    console.log({
+    /*console.log({
       usernametocheck: username
-    }) //debug log
+    }) //debug log*/
     await client.connect()
     let db = client.db("pswm")
     let users = db.collection("users")
@@ -98,10 +117,10 @@ export async function retrieveUserData(query) {
       token: query
     })
     console.log({ result_data: result })//degug log 
-   
-      return result
-    
-    
+
+    return result
+
+
     if (error) throw error
   } catch (error) {
 
