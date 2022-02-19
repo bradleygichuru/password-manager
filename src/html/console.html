@@ -10,6 +10,9 @@
   <body>
     <script src="../js/populateConsole.js"></script>
     <div class="header">
+      <div class="head">
+        <p class="head-text">simple password manager</p>
+      </div>
       <div class="user-initials-container">
         <p class="user-initials">PB</p>
       </div>
@@ -19,54 +22,42 @@
         <form id="contact" action="/addpswd" method="post">
           <h3>Add password</h3>
 
-          <fieldset>
-            <input
-              placeholder="Site url"
-              type="text"
-              tabindex="1"
-              name="siteurl"
-              required
-              autofocus
-            />
-          </fieldset>
-          <fieldset>
-            <input
-              placeholder="Site username"
-              name="username"
-              type="email"
-              tabindex="2"
-              required
-            />
-          </fieldset>
-          <fieldset>
-            <input
-              placeholder="Site password "
-              name="password"
-              type="password"
-              tabindex="2"
-              required
-            />
-          </fieldset>
-          <fieldset>
-            <button
-              name="submit"
-              type="submit"
-              id="contact-submit"
-              data-submit="...Sending"
-            >
-              Submit
-            </button>
-          </fieldset>
+          <input
+            placeholder="Site url"
+            type="text"
+            tabindex="1"
+            name="siteurl"
+            required
+            autofocus
+          />
+
+          <input
+            placeholder="Site username"
+            name="username"
+            type="text"
+            tabindex="2"
+            required
+          />
+
+          <input
+            placeholder="Site password "
+            name="password"
+            type="password"
+            tabindex="2"
+            required
+          />
+
+          <input
+            id="contact-submit"
+            align="center"
+            text="submit"
+            value="Submit"
+            type="submit"
+          />
         </form>
       </div>
 
-      <div class="passwords-container">
-        <div class="password">password</div>
-        <div class="password">password</div>
-        <div class="password">password</div>
-        <div class="password">password</div>
-        <div class="password">password</div>
-      </div>
+      <div id="passwords-container"></div>
     </div>
   </body>
 </html>
