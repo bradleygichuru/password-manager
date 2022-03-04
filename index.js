@@ -2,7 +2,7 @@ import express, { json } from "express";
 import path from "path";
 import {
   checkIfUserExists,
-  addUser, retrieveUserData,addPassword
+  addUser, retrieveUserData, addPassword
 } from "./src/js/pipeline.js";
 //const path = require("path");
 //const fs = require("fs");
@@ -37,20 +37,20 @@ server.use(express.static(staticDir));
 console.log(dirname);
 
 server.get("/", (req, res) => {
-  
+
   if (req.cookies['authtoken']) {
     console.log({ cookie: req.cookies['authtoken'] })//debug logs
     res.
-    status(200)
+      status(200)
     redirect(`/console/${req.cookies['authtoken']}`)
   }
-  else{
-  console.log(req.url);
-  res
-    .status(200)
-    .type(".html")
-    .sendFile(path.join(dirname, "src", "html", "index.html"));
-  } 
+  else {
+    console.log(req.url);
+    res
+      .status(200)
+      .type(".html")
+      .sendFile(path.join(dirname, "src", "html", "index.html"));
+  }
 });
 server.get("/access", (req, res) => {
   console.log(req.url);//debug Log
@@ -68,7 +68,7 @@ server.get("/access", (req, res) => {
 });
 server.get("/console/:identifier", async (req, res) => {
   console.log(req.url);
-  
+
   res
     .status(200)
     .type(".html")
@@ -80,10 +80,10 @@ server.get("/console/:identifier", async (req, res) => {
 server.get("/api/:apiIdentifier", async (req, res) => {
   console.log(req.body);
   let data = await retrieveUserData(req.params.apiIdentifier)
-  console.log({requestedData:data})
+  console.log({ requestedData: data })
   res
     .status(200)
-    .json(JSON.stringify(data))
+    .json(data)
 })
 
 server.post("/auth", async (req, res) => {
@@ -110,7 +110,7 @@ server.post("/auth", async (req, res) => {
     } else if (!existence) {
       console.log("user does not exist"); //DEBUG log 
 
-      
+
 
       let token = generateToken(
         req.body.password + req.body.username,
@@ -136,17 +136,15 @@ server.post("/auth", async (req, res) => {
     res.status(404).type(".html").send("error");
   }
 });
-server.post("/addpswd",async (req,res)=>{
-  if (req.cookies['authtoken']) {
-    let token = req.cookies['authtoken'] 
-    addPassword(token,{site:req.body.siteurl,username:req.body.username,password:req.body.password},token)
-    res
-      .status(200)
-      .redirect(`/console/${token}`)
-  }
-  else{
-    res.redirect('/access')
-  }
+server.post("/addpswd", async (req, res) => {
+
+  let token = req.cookies['authtoken']
+  addPassword(token, { site: req.body.siteurl, username: req.body.username, password: req.body.password }, token)
+  res
+    .status(200)
+    .redirect(`/console/${token}`)
+
+
 })
 
 

@@ -8,7 +8,7 @@
 	-webkit-font-smoothing:antialiased;
 	-moz-font-smoothing:antialiased;
 	-o-font-smoothing:antialiased;
-	font-smoothing:antialiased;
+	
 	text-rendering:optimizeLegibility;
 
   }
@@ -17,10 +17,21 @@
     height: 100%;
   }
 .header{
-    display: flex;
+    display: grid;
+	grid-template-columns: auto auto ;
     flex-direction: row;
-    justify-content: flex-end;
+	
+
+    
 }
+.head {
+    margin: 20px;
+    border-radius: 10px;
+    border-style: solid;
+    width: 200px;
+    padding: 20px;
+	align-self: flex-start;
+  }
 .user-initials-container{
     
     width: 33px;
@@ -28,13 +39,14 @@
     border-style: solid;
     border-color: black;
     border-width: 2px;
-    border-radius: 81px;
+	justify-self: end;
+    
 }
 .user-initials{
     margin: 7px;
     align-self: flex-end;
 }
-.passwords-container{
+#passwords-container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -46,7 +58,7 @@
     height: 100px;
     border-style: solid;
     border-color: black;
-    border-width: 7px;
+    border-width: 2px;
     border-radius: 10px;
 }
 .container {
