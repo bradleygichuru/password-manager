@@ -20,7 +20,7 @@ import helmet from "helmet";
 
 
 const server = express();
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 const staticDir = path.join(dirname, `src`);
 server.use(helmet({
   contentSecurityPolicy: false,
@@ -40,9 +40,9 @@ server.get("/", (req, res) => {
 
   if (req.cookies['authtoken']) {
     console.log({ cookie: req.cookies['authtoken'] })//debug logs
-    res.
-      status(200)
-    redirect(`/console/${req.cookies['authtoken']}`)
+    res
+      .status(200)
+      .redirect(`/console/${req.cookies['authtoken']}`);
   }
   else {
     console.log(req.url);
@@ -141,7 +141,7 @@ server.post("/auth", async (req, res) => {
 server.post("/addpswd", async (req, res) => {
   //receive password details from the frontend and add them to the database 
   let token = req.cookies['authtoken']
-  console.log({site: req.body.siteurl, username: req.body.username, password: req.body.password })
+  console.log({ site: req.body.siteurl, username: req.body.username, password: req.body.password })
   addPassword({ site: req.body.siteurl, username: req.body.username, password: req.body.password }, token)
   res
     .status(200)
