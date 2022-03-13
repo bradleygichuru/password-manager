@@ -33,28 +33,28 @@ export function removeUser(username) {
     });
   });
 }
-export async function addPassword(username, update, token) {
-  
+export async function addPassword(update, token) {
+
   const client = new MongoClient(uri, {
     useNewUrlParser: true
   });
   let passwords = await retrieveUserData(token)
   try {
     console.log({
-      userToUpdate: username
+      usersessionstring: token
     }) //DEBUG log
     await client.connect()
     let db = client.db("pswm")
     let users = db.collection("users")
     const options = { upsert: true };
-    
+
     passwords = passwords.payload
-    console.log({passwords})
-    console.log({update})
-    passwords.push({update})
     
-    console.log({passwords})
-    let result = await users.updateOne({ username: username }, { $set:{payload:passwords} },options)
+    console.log({ update })
+    passwords.push({ update })
+
+    console.log({ passwords })
+    let result = await users.findOneAndUpdate({ token: token }, { $set: { payload: passwords } }, options)
     console.log({ result })//degug log 
     if (error) throw error
   } catch (error) {
@@ -131,4 +131,3 @@ export async function retrieveUserData(query) {
   }
 
 }
-addPassword("eyJhbGciOiJIUzI1NiJ9.a2FiZWNoYTc1OTlicmFk.mW1dR3LaMUyrstdO3wmWZWojO714IH9Kk2F8HGR7HP8",{ site: 'marx.com', username: 'marx', password: 'nZaSYJ8V8dujAkj' },"eyJhbGciOiJIUzI1NiJ9.a2FiZWNoYTc1OTlicmFk.mW1dR3LaMUyrstdO3wmWZWojO714IH9Kk2F8HGR7HP8")

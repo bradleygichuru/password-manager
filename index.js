@@ -22,9 +22,9 @@ import helmet from "helmet";
 const server = express();
 const port = process.env.PORT || 3000
 const staticDir = path.join(dirname, `src`);
-/*server.use(helmet({
+server.use(helmet({
   contentSecurityPolicy: false,
-}));*///
+}));
 server.use(cors({
   origin: '*'
 }))
@@ -87,6 +87,7 @@ server.get("/api/:apiIdentifier", async (req, res) => {
 })
 
 server.post("/auth", async (req, res) => {
+  //Authentication route handles new sign is and logins
   console.log(req.body);
 
   let existence = await checkIfUserExists(req.body.username);
@@ -97,6 +98,7 @@ server.post("/auth", async (req, res) => {
     console.log({ existence: existence });
     //debug log 
     if (existence) {
+      //TODD fix invalid password functionality 
       console.log("user exists");//debug log
       let test = generateToken(`${req.body.password + req.body.username}`, req.body.password)
       let data = await retrieveUserData(test);
@@ -120,7 +122,7 @@ server.post("/auth", async (req, res) => {
       addUser({
         username: req.body.username,
         password: req.body.password,
-        payload: "",
+        payload: [],
         token: token,
       });
 
@@ -137,9 +139,10 @@ server.post("/auth", async (req, res) => {
   }
 });
 server.post("/addpswd", async (req, res) => {
-
+  //receive password details from the frontend and add them to the database 
   let token = req.cookies['authtoken']
-  addPassword(token, { site: req.body.siteurl, username: req.body.username, password: req.body.password }, token)
+  console.log({site: req.body.siteurl, username: req.body.username, password: req.body.password })
+  addPassword({ site: req.body.siteurl, username: req.body.username, password: req.body.password }, token)
   res
     .status(200)
     .redirect(`/console/${token}`)
