@@ -1,4 +1,10 @@
-simple password manager
+# Simple password manager
 
-    simple password manager using the pgp encryption standard
-    !work in progress
+    simple password manager(work in progress)
+## Running this project 
+
+```sh
+cd password-manager
+npm i
+npm run
+``` 
