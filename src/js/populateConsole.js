@@ -9,15 +9,19 @@ async function populate() {
   let data = await (await fetch(url)).json()
   //data = await data.json()
   data = JSON.parse(data)
-  console.log(data['payload'])//DEBUG log 
-  
-  data.payload.forEach(element => {
-    //console.log(element)
+  data['payload'].forEach(element => {
+    console.log(element['update']['site'])//DEBUG log 
     let container = document.getElementById('passwords-container')
     let password = document.createElement('div');
     password.className = 'password'
-    password.innerHTML = `site : ${element['site']}`
+    password.innerHTML = `site : ${element['update']['site']}`
     container.appendChild(password)
+
+  });
+
+  data.payload.forEach(element => {
+    //console.log(element)
+
   });
 
 
