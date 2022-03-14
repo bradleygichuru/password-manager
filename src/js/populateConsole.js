@@ -15,12 +15,14 @@ async function populate() {
     passwordDescription.className = 'pass-description'
     passwordDescription.innerHTML = element['update']['site']
 
-    let editButton = document.createElement('img');
+    let editButton = document.createElement("input");
     editButton.src = '../assets/icons8-pen-64.png'
     editButton.className = 'action-button'
-
-    let deleteButton = document.createElement('img');
+    editButton.type = 'image'
+    
+    let deleteButton = document.createElement('input');
     deleteButton.src = '../assets/icons8-trash-30.png'
+    deleteButton.type = 'image'
     deleteButton.className = 'action-button'
 
     password.appendChild(passwordDescription)
@@ -37,5 +39,5 @@ async function populate() {
 
 
 }
-
+//TODO add remove and edit button logic
 populate()
