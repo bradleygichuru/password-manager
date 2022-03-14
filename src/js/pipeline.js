@@ -1,4 +1,3 @@
-//FIXME addPassword() not modifying passwords 
 import {
   MongoClient
 } from "mongodb";
@@ -49,7 +48,7 @@ export async function addPassword(update, token) {
     const options = { upsert: true };
 
     passwords = passwords.payload
-    
+
     console.log({ update })
     passwords.push({ update })
 
