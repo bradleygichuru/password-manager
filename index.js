@@ -1,5 +1,20 @@
-import express, { json } from "express";
-import path from "path";
+import 'dotenv/config';
+import path from 'path';
+import cors from 'cors';
+import express from 'express';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const app = express()
+//serving static resources
+app.use(express.static(path.join(__dirname, './src')));
+app.get('/', (req,res) => {
+  res.sendFile('indexV2.html', {root:'./src/html'});
+});
+//AUTHENTICATION AND ENCRYPTION
+//???to be reviewed-START???
 import {
   checkIfUserExists,
   addUser, retrieveUserData, addPassword
@@ -7,36 +22,26 @@ import {
 //const path = require("path");
 //const fs = require("fs");
 //TODO write test for github CI
-var dirname = path.resolve("./");
-console.log(dirname);
+
 import cookieParser from "cookie-parser";
 import {
   generateToken
 } from "./src/js/authinit.js";
-import cors from "cors"
 import bodyParser from "body-parser";
 import helmet from "helmet";
+//???To be reviewed- END???
 
-
-
-const server = express();
-const port = process.env.PORT || 3001
-const staticDir = path.join(dirname, `src`);
-server.use(helmet({
+app.use(helmet({
   contentSecurityPolicy: false,
 }));
-server.use(cors({
-  origin: '*'
-}))
-server.use(cookieParser())
-server.use(bodyParser.urlencoded({
+app.use(cors());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({
   extended: false
 }));
-server.use(express.json());
-server.use(express.static(staticDir));
-console.log(dirname);
+app.use(express.json());
 
-server.get("/", (req, res) => {
+app.get('/', (req, res) => {
 
   if (req.cookies['authtoken']) {
     console.log({ cookie: req.cookies['authtoken'] })//debug logs
@@ -49,10 +54,10 @@ server.get("/", (req, res) => {
     res
       .status(200)
       .type(".html")
-      .sendFile(path.join(dirname, "src", "html", "index.html"));
+      .sendFile(path.join('${staticDir}/src/html/indexV2.html'));
   }
 });
-server.get("/access", (req, res) => {
+app.get("/access", (req, res) => {
   console.log(req.url);//debug Log
   if (req.cookies['authtoken']) {
     console.log({ cookie: req.cookies['authtoken'] })//debug logs
@@ -66,7 +71,7 @@ server.get("/access", (req, res) => {
   }
 
 });
-server.get("/console/:identifier", async (req, res) => {
+app.get("/console/:identifier", async (req, res) => {
   console.log(req.url);
 
   res
@@ -77,7 +82,7 @@ server.get("/console/:identifier", async (req, res) => {
 
 });
 
-server.get("/api/:apiIdentifier", async (req, res) => {
+app.get("/api/:apiIdentifier", async (req, res) => {
   console.log(req.body);
   let data = await retrieveUserData(req.params.apiIdentifier)
   console.log({ requestedData: data })
@@ -86,7 +91,7 @@ server.get("/api/:apiIdentifier", async (req, res) => {
     .json(data)
 })
 
-server.post("/auth", async (req, res) => {
+app.post("/auth", async (req, res) => {
   //Authentication route handles new sign is and logins
   console.log(req.body);
 
@@ -138,7 +143,7 @@ server.post("/auth", async (req, res) => {
     res.status(404).type(".html").send("error");
   }
 });
-server.post("/addpswd", async (req, res) => {
+app.post("/addpswd", async (req, res) => {
   //receive password details from the frontend and add them to the database 
   let token = req.cookies['authtoken']
   console.log({ site: req.body.siteurl, username: req.body.username, password: req.body.password })
@@ -146,11 +151,10 @@ server.post("/addpswd", async (req, res) => {
   res
     .status(200)
     .redirect(`/console/${token}`)
-
+//AUTHENTICATION AND ENCRYPTION END
 
 })
 
-
-server.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);//Debug log 
-});
+app.listen(process.env.PORT, () => 
+  console.log(`search http://localhost:${process.env.PORT} on your browser to use the app :-) `),
+);
