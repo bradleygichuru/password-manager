@@ -1,51 +1,25 @@
 {
-  "name": "password-manager",
-  "version": "1.0.0",
-  "description": "a simple password manager ",
-  "main": "index.js",
-  "type": "module",
-  "directories": {
-    "test": "tests"
-  },
+  "name": "pswm-nextjs",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "node index.js",
-    "debug": "nodemon index.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bradleygichuru/password-manager.git"
-  },
-  "keywords": [
-    "password"
-  ],
-  "author": "bradleygichuru",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/bradleygichuru/password-manager/issues"
-  },
-  "homepage": "https://github.com/bradleygichuru/password-manager#readme",
   "dependencies": {
-    "apollo-server-express": "^3.6.2",
-    "body-parser": "^1.19.1",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "crypto-js": "^4.1.1",
-    "express": "^4.17.1",
-    "graphql": "^15.7.2",
-    "helmet": "^4.6.0",
+    "cookie": "^0.4.2",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^4.3.0",
-    "nano": "^9.0.5",
-    "nodemon": "^2.0.12",
-    "sqlite": "^4.0.23",
-    "sqlite3": "^5.0.2"
+    "mongodb": "^4.4.1",
+    "next": "12.1.0",
+    "react": "17.0.2",
+    "react-cookie": "^4.1.1",
+    "react-dom": "17.0.2",
+    "swr": "^1.2.2"
   },
   "devDependencies": {
-    "@types/body-parser": "^1.19.2",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "jest": "^27.5.1",
-    "superagent": "^7.1.1",
-    "supertest": "^6.2.2"
+    "eslint": "8.11.0",
+    "eslint-config-next": "12.1.0"
   }
 }

@@ -1,10 +1,3 @@
 # Simple password manager
+simple password manager written in react (nextjs) (work in progress)
 
-    simple password manager(work in progress)
-## Running this project locally
-
-```sh
-cd password-manager
-npm i
-npm run
-``` 
