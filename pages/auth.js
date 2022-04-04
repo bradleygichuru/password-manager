@@ -33,30 +33,29 @@ function Auth(ck) {
             }
         )
         const result = await res.json();
-        console.log(result.user)
-        if (result.existence) {
-            setCookie('token', result.user.token, {
+        console.log(result.existence)
+        if (result.existence==true) {
+            setCookie('token', result.token, {
                 path: "/",
                 maxAge: 3600, // Expires after 1hr
                 sameSite: true,
             })
             console.log(cookie)
             router.push({
-                pathname: `/console/${result.user.token}`
+                pathname: `/console/${result.token}`
 
             })
             //TODO make logic to handle user non-existence 
         }
-        if (!result.existence && !ck) {
-            setCookie('token', result.user.token, {
+        if (result.existence==false) {
+            setCookie('token', result.token, {
                 path: "/",
                 maxAge: 3600, // Expires after 1hr
                 sameSite: true,
             })
             console.log(cookie)
             router.push({
-                pathname: `/console/${result.user.token}`,
-                query: result.user.token
+                pathname: `/console/${result.token}`
             })
         }
     }//TODO implement loading screen as user waits for authentication 

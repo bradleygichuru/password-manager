@@ -5,7 +5,17 @@ import {
 import { generateToken } from '../../lib/authtools';
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        let existence = await checkIfUserExists(req.body.username);
+
+        let test = generateToken(`${req.body.password + req.body.username}`, req.body.password)
+        let testData= await retrieveUserData(test);
+        let existence
+        if (testData) {
+            existence=true
+        } else {
+            existence=false
+        }
+        
+        //TODO existence has to be determined by correct username and passord 
 
         if (req.body.password && req.body.username) {
 
@@ -16,11 +26,11 @@ export default async function handler(req, res) {
                 console.log("user exists");//debug log
                 let test = generateToken(`${req.body.password + req.body.username}`, req.body.password)
                 let data = await retrieveUserData(test);
-                console.log({ usertoken: data.token })//debug log
+                //console.log({ usertoken: data.token })//debug log
                 res
-                    //.cookie('authtoken', data.token)//TODO find alternative to set cookies
+                    //.cookie('authtoken', data.token)
                     .status(200)
-                    .json({ user: data, existence: existence })//return object to finish authentication 
+                    .json({ token: test, existence: existence })//return object to finish authentication 
 
                 //console.log({ id: existence._id })//debug log
             } else if (!existence) {
@@ -41,7 +51,7 @@ export default async function handler(req, res) {
                 });
                 res
                     .status(200)
-                    .json({ user: data, existence: existence })
+                    .json({existence:existence,token:token})
             }
         }
     }
