@@ -19,15 +19,6 @@ class Auth extends React.Component {
 
     }
 
-    static async getInitialProps(ctx) {//TODO code not neccesary refactor if no breaking changed
-        const ck = parseCookies(ctx.req)
-        console.log({ ck })
-        if (ck) {
-            return {
-                ck: ck
-            }
-        }
-    }
     setTokenCookie = (content) => {
         const { cookies } = this.props;
 

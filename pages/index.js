@@ -31,7 +31,7 @@ export default function Home(ck) {
             <Link href="/auth" className={styles.signuptext} >first time setup</Link>
           </div>
           <div className={styles.signin}>
-            <Link className={styles.signintext} href="/console">authenticate and view passwords</Link>
+            <Link className={styles.signintext} href="/auth">authenticate and view passwords</Link>
           </div>
         </div>
       </div>
