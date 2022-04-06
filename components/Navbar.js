@@ -1,9 +1,19 @@
-import styles from './Navbar.module.css'
-function Navbar (){
-    return(
+import styles from './Navbar.module.css';
+import { useCookies } from "react-cookie";
+import { useRouter } from 'next/router';
+
+function Navbar() {
+    const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+    const router = useRouter()
+    function handleRemoveCookie() {
+        removeCookie("token");
+        router.push('/')
+      }
+    return (
         <div className={styles.head}>
-        <p className={styles.headText}>simple password manager</p>
-    </div>
-    )
+            <p className={styles.headText}>simple password manager</p>
+            <button onClick={handleRemoveCookie} className={styles.logoutButton}>logout</button>
+        </div>
+    )//TODO add logout widget and logic
 }
 export default Navbar;

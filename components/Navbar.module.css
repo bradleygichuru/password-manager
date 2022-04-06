@@ -1,7 +1,91 @@
+.head {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto;
+      grid-template-columns: auto auto;
+  width: 100%;
+}
+
 .headText {
-    margin: 20px;
-    border-radius: 10px;
-    border-style: solid;
-    width: 200px;
-    padding: 20px;
-  }
+  margin: 20px;
+  border-radius: 10px;
+  border-style: solid;
+  width: 200px;
+  padding: 20px;
+}
+
+.logoutButton {
+  background: none;
+  border: 0;
+  border-radius: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 1em;
+  padding: 1em 2em;
+  -ms-grid-column-align: right;
+      justify-self: right;
+  -webkit-box-shadow: inset 0 0 0 2px #000000;
+          box-shadow: inset 0 0 0 2px #000000;
+  color: #000000;
+  font-size: inherit;
+  font-weight: 700;
+  height: auto;
+  position: relative;
+  vertical-align: middle;
+}
+
+.logoutButton::before, .logoutButton::after {
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.logoutButton {
+  -webkit-transition: color 0.25s;
+  transition: color 0.25s;
+}
+
+.logoutButton::before, .logoutButton::after {
+  border: 2px solid transparent;
+  width: 0;
+  height: 0;
+}
+
+.logoutButton::before {
+  top: 0;
+  left: 0;
+}
+
+.logoutButton::after {
+  bottom: 0;
+  right: 0;
+}
+
+.logoutButton:hover {
+  color: #000000;
+}
+
+.logoutButton:hover::before, .logoutButton:hover::after {
+  width: 100%;
+  height: 100%;
+}
+
+.logoutButton:hover::before {
+  border-top-color: #fefefe;
+  border-right-color: #fefefe;
+  -webkit-transition: width 0.25s ease-out, height 0.25s ease-out 0.25s;
+  transition: width 0.25s ease-out, height 0.25s ease-out 0.25s;
+}
+
+.logoutButton:hover::after {
+  border-bottom-color: #fefefe;
+  border-left-color: #fefefe;
+  -webkit-transition: border-color 0s ease-out 0.5s, width 0.25s ease-out 0.5s, height 0.25s ease-out 0.75s;
+  transition: border-color 0s ease-out 0.5s, width 0.25s ease-out 0.5s, height 0.25s ease-out 0.75s;
+}
+
+/* Page styling */
+/*# sourceMappingURL=Navbar.module.css.map */
