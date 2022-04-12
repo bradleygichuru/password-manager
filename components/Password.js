@@ -2,17 +2,26 @@ import styles from './password.module.css'
 import Image from 'next/image';
 import editIcon from '../assets/icons8-pen-64.png'
 import deleteIcon from '../assets/icons8-trash-30.png'
-function Password(props) {
-
-    const deletePswd = async event => {
+import React from 'react';
+class Password extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            editSite: false,
+            editPassword: false,
+            editUsername: false,
+            
+        }
+    }
+    deletePswd = async event => {
         event.preventDefault()
-        //handle deletion of passwords
-        const res = await fetch(//FIXME request being sent to wrong url
+        //TODO handle deletion editing and copying to clipboard of passwords
+        const res = await fetch(
             '/api/v1/pswdManip/delete',
             {
                 body: JSON.stringify({
-                    token: props.token,
-                    candidate: somevar,
+                   
+                    candidate: this.props.site,
                 }),
                 headers: {
                     'Content-Type': 'application/json'
@@ -22,39 +31,103 @@ function Password(props) {
         )
         const result = await res.json();
         console.log(result)//
+       this.props.refresh()
 
     }
 
-    const editField = async event=>{
+    editUsernameField = async (event) => {
         event.preventDefault();
+        this.setState({editUsername:!this.state.editUsername})
+
+
     }
-    return (
-        <div className={styles.password}>
-            <p className={styles.itemInformation}>Item Information</p>
-            <p className={styles.passDescription}>{props.site}</p>
-            <p className={styles.passText}>{props.password}</p>
-            <p className={styles.passUsername}>{props.username}</p>
-            
-            <Image
+    editPasswordField = async (event) => {
+        event.preventDefault();
+        this.setState({editPassword:!this.state.editPassword})
 
-                src={editIcon}
-                alt="Picture of the author"
-                width={20}
-                height={20}
-                className={styles.actionButton}
-                onClick={editField}
 
-            />
-            <Image
-                width={20}
-                height={20}
-                src={deleteIcon}
-                alt="Picture of the author"
-                className={styles.actionButton}
-                onClick={deletePswd}
+    }
+    editSiteField = async (event) => {
+        event.preventDefault();
+        this.setState({editSite:!this.state.editSite})
 
-            />
-        </div>
-    )
+
+    }
+
+    render() {
+        /*const editPassword = this.state.editPassword
+        const editSite = this.state.editSite
+        const editUsername = this.state.editUsername*/
+        return (
+            //TODO add save button in each field to update the password once editing is done 
+            <div className={styles.password}>
+
+                <p className={styles.itemInformation}>Item Information</p>
+
+
+                <div className={styles.field}>
+                    {
+                        this.state.editSite == true ? <input className={styles.site_input} placeholder={this.props.site}></input> : <p className={styles.passSite}>{this.props.site}</p>
+
+                    }
+                    <Image
+
+                        src={editIcon}
+                        alt="edit icon"
+                        width={20}
+
+                        height={20}
+                        className={styles.actionButton}
+                        onClick={this.editSiteField}
+
+                    />
+                </div>
+                <div className={styles.field}>
+                    {
+                        this.state.editPassword == true ? <input className={styles.password_input} placeholder={this.props.password}></input> : <p className={styles.passText}>{this.props.password}</p>
+
+                    }
+
+                    <Image
+
+                        src={editIcon}
+                        alt="edit icon"
+                        width={20}
+                        height={20}
+                        className={styles.actionButton}
+                        onClick={this.editPasswordField}
+
+                    />
+                </div>
+                <div className={styles.field}>
+                    {
+                        this.state.editUsername == true ? <input className={styles.username_input} placeholder={this.props.username}></input> : <p className={styles.passUsername}>{this.props.username}</p>
+                    }
+
+                    <Image
+
+                        src={editIcon}
+                        alt="edit icon"
+                        width={20}
+                        height={20}
+                        className={styles.actionButton}
+                        onClick={this.editUsername}
+
+                    />
+
+                </div>
+
+                <Image
+                    width={20}
+                    height={20}
+                    src={deleteIcon}
+                    alt="delete icon"
+                    className={styles.actionButton}
+                    onClick={this.deletePswd}
+
+                />
+            </div>
+        )
+    }
 }
 export default Password;

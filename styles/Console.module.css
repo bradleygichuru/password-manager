@@ -4,6 +4,12 @@
     flex-wrap: wrap;
     
 }
+.pswdEntriesPrompt{
+	color: black;
+	display: block;
+	font-size: 30px;
+	font-weight: 400;
+}
 .password{
     margin: 10px;
     width:200px;

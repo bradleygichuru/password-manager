@@ -6,17 +6,18 @@ import styles from '../../styles/Console.module.css'
 import { useRouter } from 'next/router';
 import Password from '../../components/Password';
 import react from 'react';
+import Loader from '../../components/Loader'
 
 //const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
-
+//TODO make add password form look better 
 class Console extends React.Component {
-    
+
     // console.log(ck.ck)
     constructor(props) {
         super(props)
 
-        this.state = { passwordList: [] }
+        this.state = { passwordList: [], noPasswordList: '', loading: false }
     }
 
     componentDidMount() {
@@ -27,27 +28,10 @@ class Console extends React.Component {
     }
     componentDidUpdate() {
         console.log('update')//DEBUG log
-
+        
 
         //this.populate()
     }
-    //const [dataUrl, setDataUrl] = useState('');
-    //console.log({ dataUrl })
-    //const { token } = router.query
-    //const [data, setData] = useState({});
-    // const [passwords, setPasswords] = useState([])
-
-    /*useEffect(() => {
-
-        fetch(`/api/v1/${ck.ck.token}`).then((res) => res.json()).then((data) => {
-
-            setData(data.data)
-            setPasswords(data.data.payload)
-
-
-        })
-
-    }, [])*/
 
     static async getInitialProps(ctx) {
         const ck = parseCookies(ctx.req)
@@ -58,16 +42,16 @@ class Console extends React.Component {
             }
         }
     }
+
     refresh = () => {
         this.setState({ data: {}, passwords: [], passwordList: [] })
     }
-    initPopulate = () => {
 
-    }
     addPswd = (event) => {
-        event.preventDefault()
-        //TODO give user feedback that their password has been added
         // handle adding of passwords 
+        event.preventDefault()
+        //TODO give user feedback that their password has been added or give user feedback when he has been signed in 
+        this.setState({loading:!this.state.loading})
         fetch(
             '/api/v1/pswdManip/add',
             {
@@ -84,89 +68,115 @@ class Console extends React.Component {
         ).then((res) => res.json()).then((data) => {
             //this.refresh()
             console.log(data)//DEBUG log
+
+
             this.setState({
                 passwordList: data.payload.map((password, index) => {
                     //console.log(password)
-                    return <Password key={index} site={password.site} password={password.password} username={password.username}></Password>
+                    return <Password key={index} site={password.site} password={password.password} username={password.username} refresh={this.constructPasswords}></Password>
                 })
             })
+            this.setState({loading:!this.state.loading})
+
+
 
         })
-       // this.constructPasswords()
-       
+        // this.constructPasswords()
+
 
 
     }
 
 
     constructPasswords = () => {
+        this.setState({loading:!this.state.loading})
         fetch(`/api/v1/${this.props.ck.token}`).then((res) => res.json()).then((data) => {
             console.log(data)
-            this.setState({
-                passwordList: data.payload.map((password, index) => {
-                    //console.log(password)
-                    return <Password key={index} site={password.site} password={password.password} username={password.username}></Password>
+            if (data.payload.length > 0) {
+                this.setState({
+                    passwordList: data.payload.map((password, index) => {
+                        //console.log(password)
+                        return <Password key={index} site={password.site} password={password.password} username={password.username} refresh={this.constructPasswords}></Password>
+                    })
                 })
-            })
+                this.setState({loading:!this.state.loading})
+            }
+            else if (data.payload.length == 0) {
+                this.setState({ noPasswordList: 'you have no password entries' })
+            }
+
         })
+       
 
 
     }
 
-    //TODO add edit and delete logic
     render() {
-        return (
-            <div>
-                <Navbar></Navbar>
-                <div className={styles.pageContainer}>
-                    <div className={styles.container}>
-                        <form onSubmit={this.addPswd} id={styles.contact} method="post">
-                            <h3>Add password</h3>
+        let loading = this.state.loading
+        if (loading == true) {
+            return (
+                <div>
+                    <Loader name='You are being registered'></Loader>
 
-                            <input
-                                placeholder="Site url"
-                                type="text"
-                                tabindex="1"
-                                name="siteurl"
-                                required
-                                autofocus
-                            />
+                </div>
+            )
+        }
+        else {
 
-                            <input
-                                placeholder="Site username"
-                                name="username"
-                                type="text"
-                                tabindex="2"
-                                required
-                            />
 
-                            <input
-                                placeholder="Site password "
-                                name="password"
-                                type="password"
-                                tabindex="2"
-                                required
-                            />
+            return (
+                <div>
+                    <Navbar></Navbar>
+                    <div className={styles.pageContainer}>
+                        <div className={styles.container}>
+                            <form onSubmit={this.addPswd} id={styles.contact} method="post">
+                                <h3>Add password</h3>
 
-                            <input
-                                id={styles.contactSubmit}
-                                align="center"
-                                text="submit"
-                                value="Submit"
-                                type="submit"
+                                <input
+                                    placeholder="Site url"
+                                    type="text"
+                                    tabindex="1"
+                                    name="siteurl"
+                                    required
+                                    autofocus
+                                />
 
-                            />
-                        </form>
-                    </div>
+                                <input
+                                    placeholder="Site username"
+                                    name="username"
+                                    type="text"
+                                    tabindex="2"
+                                    required
+                                />
 
-                    <div id={styles.passwordsContainer}>
-                        {
-                            this.state.passwordList
-                        }
+                                <input
+                                    placeholder="Site password "
+                                    name="password"
+                                    type="password"
+                                    tabindex="2"
+                                    required
+                                />
+
+                                <input
+                                    id={styles.contactSubmit}
+                                    align="center"
+                                    text="submit"
+                                    value="Submit"
+                                    type="submit"
+
+                                />
+                            </form>
+                        </div>
+
+                        <div id={styles.passwordsContainer}>
+                            {
+                                this.state.passwordList.length > 0 ? this.state.passwordList : <p className={styles.pswdEntriesPrompt}>{this.state.noPasswordList}</p>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        }
     }
 }
 

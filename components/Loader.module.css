@@ -1,12 +1,15 @@
+.container {
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(0, 200px);
+          transform: translate(0, 200px);
+}
 
-.container{
-  position:fixed;
-  margin-top: 200px;
-  margin-left: 350px;
-}
-.message{
-  margin-left: -10px;
-}
 .spinner {
   -webkit-animation: rotator 1.4s linear infinite;
           animation: rotator 1.4s linear infinite;
@@ -45,37 +48,37 @@
 
 @-webkit-keyframes colors {
   0% {
-    stroke: #4285F4;
+    stroke: #4285f4;
   }
   25% {
-    stroke: #DE3E35;
+    stroke: #de3e35;
   }
   50% {
-    stroke: #F7C223;
+    stroke: #f7c223;
   }
   75% {
-    stroke: #1B9A59;
+    stroke: #1b9a59;
   }
   100% {
-    stroke: #4285F4;
+    stroke: #4285f4;
   }
 }
 
 @keyframes colors {
   0% {
-    stroke: #4285F4;
+    stroke: #4285f4;
   }
   25% {
-    stroke: #DE3E35;
+    stroke: #de3e35;
   }
   50% {
-    stroke: #F7C223;
+    stroke: #f7c223;
   }
   75% {
-    stroke: #1B9A59;
+    stroke: #1b9a59;
   }
   100% {
-    stroke: #4285F4;
+    stroke: #4285f4;
   }
 }
 
