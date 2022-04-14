@@ -16,7 +16,6 @@ class Console extends React.Component {
     // console.log(ck.ck)
     constructor(props) {
         super(props)
-
         this.state = { passwordList: [], noPasswordList: '', loading: false }
     }
 
@@ -43,9 +42,7 @@ class Console extends React.Component {
         }
     }
 
-    refresh = () => {
-        this.setState({ data: {}, passwords: [], passwordList: [] })
-    }
+    
 
     addPswd = (event) => {
         // handle adding of passwords 
@@ -76,7 +73,9 @@ class Console extends React.Component {
                     return <Password key={index} site={password.site} password={password.password} username={password.username} refresh={this.constructPasswords}></Password>
                 })
             })
-            this.setState({loading:!this.state.loading})
+            this.setState({
+                loading:!this.state.loading
+            })
 
 
 
@@ -103,6 +102,7 @@ class Console extends React.Component {
             }
             else if (data.payload.length == 0) {
                 this.setState({ noPasswordList: 'you have no password entries' })
+                this.setState({loading:!this.state.loading})
             }
 
         })
@@ -113,7 +113,7 @@ class Console extends React.Component {
 
     render() {
         let loading = this.state.loading
-        if (loading == true) {
+        if (loading) {
             return (
                 <div>
                     <Loader name='You are being registered'></Loader>
