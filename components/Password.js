@@ -15,7 +15,7 @@ class Password extends React.Component {
     }
     deletePswd = async event => {
         event.preventDefault()
-        //TODO handle deletion editing and copying to clipboard of passwords
+        //TODO handle  editing and copying to clipboard of passwords
         const res = await fetch(
             '/api/v1/pswdManip/delete',
             {

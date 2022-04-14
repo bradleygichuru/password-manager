@@ -14,6 +14,6 @@ function Navbar() {
             <p className={styles.headText}>simple password manager</p>
             <button onClick={handleRemoveCookie} className={styles.logoutButton}>logout</button>
         </div>
-    )//TODO add logout widget and logic
+    )
 }
 export default Navbar;

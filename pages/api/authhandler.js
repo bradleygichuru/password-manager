@@ -7,15 +7,13 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
 
         let test = generateToken(`${req.body.password + req.body.username}`, req.body.password)
-        let testData= await retrieveUserData(test);
+        let testData = await retrieveUserData(test);
         let existence
         if (testData) {
-            existence=true
+            existence = true
         } else {
-            existence=false
+            existence = false
         }
-        
-        //TODO existence has to be determined by correct username and passord 
 
         if (req.body.password && req.body.username) {
 
@@ -25,7 +23,7 @@ export default async function handler(req, res) {
                 //TODD fix invalid password functionality 
                 console.log("user exists");//debug log
                 let test = generateToken(`${req.body.password + req.body.username}`, req.body.password)
-                let data = await retrieveUserData(test);
+
                 //console.log({ usertoken: data.token })//debug log
                 res
                     //.cookie('authtoken', data.token)
@@ -37,7 +35,7 @@ export default async function handler(req, res) {
                 console.log("user does not exist"); //DEBUG log 
 
 
-                //TODO find a way to tell the user they are being registered
+               
                 let token = generateToken(
                     req.body.password + req.body.username,
                     req.body.password
@@ -51,7 +49,7 @@ export default async function handler(req, res) {
                 });
                 res
                     .status(200)
-                    .json({existence:existence,token:token})
+                    .json({ existence: existence, token: token })
             }
         }
     }
